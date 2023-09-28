@@ -9,10 +9,7 @@
 <body>
     <h1>Hello World!</h1>
     <article>
-        <h1><a href="/post">My First Post</a></h1>
-        <p>
-            I am Anton and this is my First Post page using Laravel
-        </p>
+       <?= $post; ?>
     </article>
     <button><a href="/">Go Back...</a></button>
 </body>
