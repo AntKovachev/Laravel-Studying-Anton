@@ -7,18 +7,10 @@
     <link rel="stylesheet" href="/app.css">
 </head>
 <body>
-    <h1>Hello World!</h1>
-    <article>
-        <h1><a href="/posts/my-first-post">My First Post</a></h1>
-        <p>I am Anton and this is my First Post using Laravel</p>
-    </article>
-    <article>
-        <h1><a href="/posts/my-second-post">My Second Post</a></h1>
-        <p>I am Anton and this is my Second Post using Laravel</p>
-    </article>
-    <article>
-        <h1><a href="/posts/my-third-post">My Third Post</a></h1>
-        <p>I am Anton and this is my Third Post using Laravel</p>
-    </article>
+    <?php foreach ($posts as $post) : ?>
+        <article>
+            <?= $post ?>
+        </article>
+    <?php endforeach ?>
 </body>
 </html>
