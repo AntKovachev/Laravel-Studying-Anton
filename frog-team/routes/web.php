@@ -1,6 +1,11 @@
 <?php
 use App\Models\Post;
+use Symfony\Component\Yaml\Yaml;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+use League\CommonMark\Extension\FrontMatter\Data\LibYamlFrontMatterParser;
+use League\CommonMark\Extension\FrontMatter\FrontMatterParser;
+use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +24,7 @@ Route::get('/', function () {
         'posts' => Post::all()
     ]);
 });
-//               Wildcard
+            //Wildcard
 Route::get('posts/{post}', function ($slug) {
     return view('post', [
         'post' => Post::find($slug)
