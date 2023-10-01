@@ -24,21 +24,23 @@ class Post
 
     public static function all ()
     {
-        
-        //Find all the files in the posts directory and collect them in collection
-        return collect(File::files(resource_path("posts")))
+        return cache()->rememberForever('posts.all', function() {
+             //Find all the files in the posts directory and collect them in collection
+            return collect(File::files(resource_path("posts")))
 
-        //Map over each item (loop), and for each file parse that file into a document 
-        ->map(fn($file) => YamlFrontMatter::parseFile($file))
+            //Map over each item (loop), and for each file parse that file into a document 
+            ->map(fn($file) => YamlFrontMatter::parseFile($file))
 
-        //Once we have collection of documents, map over it again and build a document object that we're in control of
-        ->map(fn($document) => new Post(
-                $document->title,
-                $document->excerpt,
-                $document->date,
-                $document->body(),
-                $document->slug
-        ));
+            //Once we have collection of documents, map over it again and build a document object that we're in control of
+            ->map(fn($document) => new Post(
+                    $document->title,
+                    $document->excerpt,
+                    $document->date,
+                    $document->body(),
+                    $document->slug
+            ))
+            ->sortByDesc('date');
+        });
     }
                             //Requested slug
     public static function find ($slug) 
