@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/app.css">
 </head>
 <body>
-   {{ $slot }}
+    <!--Basic blade component-->
+    {{$slot}}
 </body>
 </html>

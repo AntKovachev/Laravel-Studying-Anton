@@ -1,15 +1,16 @@
-<x-layout content="Hello there">
+<x-layout>
     @foreach ($posts as $post)
-    <article>
-        <h1>
-            <a href="/posts/{{ $post->slug }}">
-            {{ $post->title }}
-            </a>
-        </h1>
+        <article>
+            <h1>
+                <a href="/posts/{{$post->slug}}">
+                {{$post->title}}
+                
+                </a>
+            </h1>
 
-        <div>
-            {{ $post->excerpt }}
-        </div>
-    </article>
+            <div>
+                {{$post->excerpt}}
+            </div>
+        </article>
     @endforeach
 </x-layout>
