@@ -9,11 +9,11 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
-    public function getRouteKeyName()
+    public function category() 
     {
-        return 'slug';
+        return $this->belongsTo(Category::class);
     }
 
     // protected $fillable = ['title', 'excerpt', 'body', 'id'];
