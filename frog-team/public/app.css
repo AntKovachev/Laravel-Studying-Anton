@@ -1,6 +1,6 @@
 body {
-    background: rgb(41, 35, 35);
-    color: white;
+    background: rgb(204, 233, 231);
+    color: black;
     max-width: 600px;
     margin: auto;
     font-family: sans-serif;
@@ -16,19 +16,26 @@ article + article{
     border-top: 1px solid gray;
 }
 
+/* Style for the Halloween-themed button */
 button {
-    background-color: black; /* Set the default background color */
-    color: red; /* Set the text color */
-    padding: 10px 20px; /* Add padding for better appearance */
-    border: none; /* Remove the button border for a cleaner look */
-}
-  
-button:active {
-background-color: red; /* Change the background color when the button is clicked */
+    margin-top: 5%;
+    padding: 10px 20px;
+    background-color: #ff6600;
+    color: #ffffff;
+    border: 2px solid #ff6600;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+    font-family: 'Shadows Into Light', cursive;
+    box-shadow: 3px 3px 3px #000;
 }
 
+/* Hover effect for all buttons */
 button:hover {
-    background-color: red;
-    font-family: sans-serif;
+    background-color: #000; /* Black background on hover */
+    color: #ff6600; /* Change text color to orange on hover */
+    box-shadow: 5px 5px 5px #000; /* Increase the shadow size on hover */
 }
 
