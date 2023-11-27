@@ -40,6 +40,12 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    // Mutator !!!IMPORTANT TO FOLLOW NAMING CONVENTION!!!
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = bcrypt($password);
+    }
+
     public function posts()
     {
         return $this->HasMany(Post::class);
