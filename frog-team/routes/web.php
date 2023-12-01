@@ -4,7 +4,6 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\PostCommentsController;
-use App\Models\Post;
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 
