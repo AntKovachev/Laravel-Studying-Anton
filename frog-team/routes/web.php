@@ -5,6 +5,22 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\PostCommentsController;
 
+Route::get('ping', function() {
+    $mailchimp = new \MailchimpMarketing\ApiClient();
+
+    $mailchimp->setConfig([
+        'apiKey' => config('services.mailchimp.key'),
+        'server' => 'us21'
+    ]);
+
+    $response = $response = $mailchimp->lists->addListMember('2b9d68ec40', [
+        'email_address' => 'testuser1234@gmail.com',
+        'status' => 'subscribed'
+    ]);
+
+    ddd($response);
+});
+
 Route::get('/', [PostController::class, 'index'])->name('home');
 
             //Wildcard
