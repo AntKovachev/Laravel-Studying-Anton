@@ -22,12 +22,19 @@ class AdminPostController extends Controller
 
     public function store()
     {   
-        Post::create(array_merge($this->validatePost(), [
-            'user_id' => request()->user()->id,
-            'thumbnail' => request()->file('thumbnail')->store('thumbnails')
-        ]));
+        $attributes = request()->validate([
+            'title' => 'required',
+            'slug' => ['required', Rule::unique('posts', 'slug')],
+            'excerpt' => 'required',
+            'body' => 'required',
+            'category_id' => ['required', Rule::exists('categories', 'id')]
+        ]);
 
-        return redirect('/');
+        $attributes['user_id'] = auth()->id();
+
+        Post::create($attributes);
+
+        return redirect('admin/posts')->with('success', 'Your post has been created successfully!');
     }
 
     public function edit(Post $post)
