@@ -1,4 +1,12 @@
 <?php
+
+use App\Models\User;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use App\Http\Controllers\ResetPasswordController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\AdminPostController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PostCommentsController;
@@ -22,6 +30,31 @@ Route::get('login', [SessionsController::class, 'create'])->middleware('guest');
 Route::post('login', [SessionsController::class, 'store'])->middleware('guest');
 
 Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth');
+
+//Reset Password
+Route::get('/forgot-password', function () {
+    return view('admin.forgot-password');
+})->middleware('guest')->name('password.request');
+
+Route::post('/forgot-password', function (Request $request) {
+    $request->validate(['email' => 'required|email']);
+    
+    $status = Password::sendResetLink(
+        $request->only('email')
+    );
+
+    return $status === Password::RESET_LINK_SENT
+                ? back()->with(['status' => __($status)])
+                : back()->withErrors(['email' => __($status)]);
+})->middleware('guest')->name('password.email');
+
+Route::get('/reset-password/{token}', function (string $token) {
+    return view('admin.reset-password', ['token' => $token]);
+})->middleware('guest')->name('password.reset');
+
+Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])
+    ->middleware('guest')
+    ->name('password.update');
 
 // Admin
 Route::middleware('can:admin')->group(function () {
