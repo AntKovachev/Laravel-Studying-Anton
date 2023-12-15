@@ -10,6 +10,7 @@
                     <x-form.input name="password" type="password" autocomplete="new-password"/>
                     <x-form.button>Log In</x-form.button>
                 </form>
+                
                 <form method="GET" action="/forgot-password" class="mt-10">
                     <x-form.button>Forgot Password?</x-form.button>
                 </form>
