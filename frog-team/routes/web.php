@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\AccountController;
 use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\AdminPostController;
 use App\Http\Controllers\NewsletterController;
@@ -60,3 +61,5 @@ Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword']
 Route::middleware('can:admin')->group(function () {
     Route::resource('admin/posts', AdminPostController::class)->except('show');
 });
+
+Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
