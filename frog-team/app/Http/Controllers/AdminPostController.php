@@ -20,12 +20,16 @@ class AdminPostController extends Controller
     {
         return view('admin.posts.create');
     }
-
     public function store()
-    {
-        Post::create(array_merge($this->validatePost(), [
+    {   
+        $validatedData = $this->validatePost();
+
+        $thumbnail = request()->file('thumbnail');
+        $thumbnailPath = $thumbnail->storeAs('thumbnails', $thumbnail->hashName(), 'public');
+
+        Post::create(array_merge($validatedData, [
             'user_id' => request()->user()->id,
-            'thumbnail' => request()->file('thumbnail')->store('thumbnails')
+            'thumbnail' => $thumbnailPath,
         ]));
 
         return redirect('admin/posts')->with('success', 'Your post has been created successfully!');
@@ -68,7 +72,7 @@ class AdminPostController extends Controller
 
         return request()->validate([
             'title' => 'required',
-            'thumbnail' => $post->exists ? ['image'] : ['required', 'image'],
+            'thumbnail' => $post->exists ? 'image' : 'required|image',
             'slug' => ['required', Rule::unique('posts', 'slug')->ignore($post)],
             'excerpt' => 'required',
             'body' => 'required',
