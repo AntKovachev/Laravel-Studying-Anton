@@ -6,15 +6,25 @@
     </h1>
     <div class="flex">
         <aside class="w-48 flex-shrink-0">
-            <h4 class="font-semibold mb-4">Links</h4>
             <ul>
-                <li>
-                    <a href="/admin/posts" class="{{ request()->is('admin/posts') ? 'text-blue-500' : ''}}">All Posts</a>
+                <li class="mt-5 mb-2">
+                    <button type="button" class="transition-colors duration-300 bg-blue-500 hover:bg-blue-600 mt-4 lg:mt-0 lg:ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-8" onclick="window.location.href='/admin/posts/create'">
+                        Create Post
+                    </button>
                 </li>
 
-                <li>
-                    <a href="/admin/posts/create" class="{{ request()->is('admin/posts/create') ? 'text-blue-500' : ''}}">New post</a>
+                @php
+                    $currentUrl = request()->url();
+                    $goBackUrl = ($currentUrl === 'http://localhost:8000/admin/posts') ? '/account' : '/admin/posts';
+                @endphp
+
+                <li class="mt-5 mb-2">
+                    <button type="button" class="transition-colors duration-300 bg-blue-500 hover:bg-blue-600 mt-4 lg:mt-0 lg:ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-8" onclick="window.location.href='{{ $goBackUrl }}'">
+                        Go Back
+                    </button>
                 </li>
+
+
             </ul>
         </aside>
     
