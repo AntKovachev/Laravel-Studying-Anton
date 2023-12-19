@@ -1,5 +1,5 @@
 <x-layout>
-    <x-setting heading="All Users">
+    <x-users-setting heading="All Users">
         <div class="flex flex-col">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -41,5 +41,5 @@
                 </div>
             </div>
         </div>
-    </x-setting>
+    </x-users-setting>
 </x-layout>
