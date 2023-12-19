@@ -11,7 +11,11 @@
                 <li class="mb-2">
                     <a href="/admin/posts" class="block {{ request()->is('admin/posts') }}">Dashboard</a>
                 </li>
-            
+                
+                <li class="mb-2">
+                    <a href="/admin/users" class="block {{ request()->is('admin/users') }}">All Users</a>
+                </li>
+
                 <li class="mb-2">
                     <a href="#" x-data="{}" @click.prevent="document.querySelector('#logout-form').submit()">Log Out</a>
                 </li>

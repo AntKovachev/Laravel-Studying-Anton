@@ -63,3 +63,5 @@ Route::middleware('can:admin')->group(function () {
 });
 
 Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
+
+Route::get('/admin/users', [AccountController::class, 'showUsers'])->middleware('auth');
