@@ -8,7 +8,7 @@
                     @csrf
                     <x-form.input name="email" type="email" autocomplete="email"/>
                     <x-form.input name="password" type="password" autocomplete="new-password"/>
-                    <x-form.button class="ml">Log In</x-form.button>
+                    <x-form.button>Log In</x-form.button>
                 </form>
                 
                 <div class="flex justify-between mt-4">
