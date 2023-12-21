@@ -17,13 +17,17 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach ($users as $user)
-                                    <tr>
+                                    <tr id="userRow{{ $user->id }}" class="transition-colors">
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center">
-                                                <div class="text-sm font-medium text-gray-900">
-                                                    <a href="#">
+                                            <div class="flex items-center relative">
+                                                <div class="text-sm font-medium text-gray-900 cursor-pointer">
+                                                    <a href="#" id="userDropdown{{ $user->id }}" onclick="toggleDropdown('userDropdown{{ $user->id }}', 'userRow{{ $user->id }}')">
                                                         {{ $user->username }}
                                                     </a>
+                                                </div>
+                                                <div id="dropdownContent{{ $user->id }}" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
+                                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</a>
+                                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Add Friend</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -42,4 +46,51 @@
             </div>
         </div>
     </x-users-setting>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var openDropdown = null;
+    
+            // Add event listener to the document for username links
+            document.addEventListener('click', function (event) {
+                // Find the closest ancestor with an ID starting with 'userRow'
+                var userRow = event.target.closest('[id^="userRow"]');
+                
+                if (userRow) {
+                    // Get the user ID from the element's ID
+                    var userId = userRow.id.replace('userRow', '');
+    
+                    // Close the previously opened dropdown, if any
+                    if (openDropdown) {
+                        openDropdown.classList.add('hidden');
+                    }
+    
+                    // Reset the openDropdown variable
+                    openDropdown = null;
+    
+                    // Toggle the visibility of the dropdown content
+                    var dropdownContent = document.getElementById('dropdownContent' + userId);
+                    dropdownContent.classList.toggle('hidden');
+                    openDropdown = dropdownContent;
+    
+                    // Remove gray background from all rows
+                    document.querySelectorAll('.bg-gray-300').forEach(function(row) {
+                        row.classList.remove('bg-gray-300');
+                    });
+    
+                    // Add gray background to the current user row
+                    userRow.classList.toggle('bg-gray-300');
+                } else {
+                    // Clicked outside of any user row, close all dropdowns
+                    document.querySelectorAll('.bg-gray-300').forEach(function(row) {
+                        row.classList.remove('bg-gray-300');
+                    });
+    
+                    openDropdown?.classList.add('hidden');
+                    openDropdown = null;
+                }
+            });
+        });
+    </script>
+    
 </x-layout>
