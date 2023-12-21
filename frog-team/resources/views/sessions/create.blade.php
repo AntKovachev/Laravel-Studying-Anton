@@ -11,9 +11,15 @@
                     <x-form.button>Log In</x-form.button>
                 </form>
                 
-                <form method="GET" action="/forgot-password" class="mt-10">
-                    <x-form.button>Forgot Password?</x-form.button>
-                </form>
+                <div class="flex justify-between mt-4">
+                    <form method="GET" action="/forgot-password">
+                        <x-form.button>Forgot Password?</x-form.button>
+                    </form>
+                    
+                    <form method="GET" action="/register">
+                        <x-form.button class="text-right">No Account ?</x-form.button>
+                    </form>
+                </div>
             </x-panel>
         </main>
     </section>
