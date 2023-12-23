@@ -21,9 +21,9 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center relative">
                                                 <div class="text-sm font-medium text-gray-900 cursor-pointer">
-                                                    <a href="#" id="userDropdown{{ $user->id }}" onclick="toggleDropdown('userDropdown{{ $user->id }}', 'userRow{{ $user->id }}')">
+                                                    <button type="button" id="userDropdown{{ $user->id }}" onclick="toggleDropdown('userDropdown{{ $user->id }}', 'userRow{{ $user->id }}', event)">
                                                         {{ $user->username }}
-                                                    </a>
+                                                    </button>
                                                 </div>
                                                 <div id="dropdownContent{{ $user->id }}" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
                                                     <a href="{{ route('profiles.show', ['user' => $user]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</a>
