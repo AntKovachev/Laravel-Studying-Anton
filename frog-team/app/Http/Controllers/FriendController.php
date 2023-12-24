@@ -16,7 +16,7 @@ class FriendController extends Controller
     public function addFriend($recipientId)
     {
         // Get the authenticated user
-        $user = auth()->user(); // You may use your own method to get the authenticated user
+        $user = auth()->user();
 
         // Get the recipient user
         $recipient = User::find($recipientId);
@@ -24,13 +24,29 @@ class FriendController extends Controller
         // Check if the user can befriend the recipient
         if ($user->canBefriend($recipient)) {
             // Befriend the user
-            $friendship = $user->befriend($recipient);
-            // ... handle successful friend request
+            $user->befriend($recipient);
+            
             return back()->with('success', 'Friend request sent!');
         } else {
             // User is already a friend, handle accordingly
-            // ... return a message or perform other actions
             return back()->with('success', 'User is already your friend!');
         }
     }
+
+    public function removeFriend($friendId)
+    {
+        $user = auth()->user();
+        $friend = User::find($friendId);
+
+        // Check if the user is friends with the specified friend
+        if ($user->isFriend($friend)) {
+            // Remove the friend
+            $user->unfriend($friend);
+
+            return back()->with('success', 'Friend removed successfully!');
+        } else {
+            // Handle the case where the specified user is not a friend
+            return back()->with('success', 'This user is not in your friend list!');
+        }
+}
 }
