@@ -4,6 +4,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Http\Controllers\FriendController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Http\Request;
@@ -66,5 +67,7 @@ Route::middleware('can:admin')->group(function () {
 Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
 
 Route::get('/admin/users', [AccountController::class, 'showUsers'])->middleware('auth');
+
+Route::get('/add-friend/{user}', [FriendController::class, 'addFriend'])->name('add.friend')->middleware('auth');
 
 Route::get('/profiles/{user}', [UserProfileController::class, 'show'])->name('profiles.show')->middleware('auth');

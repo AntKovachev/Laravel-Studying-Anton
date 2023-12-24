@@ -31,14 +31,22 @@
                                                 </div>
                                                 <div id="dropdownContent{{ $user->id }}" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
                                                     <a href="{{ route('profiles.show', ['user' => $user]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</a>
-                                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Add Friend</a>
+                                                    @if ($user->isFriend(auth()->user()))  <!-- Add this line -->
+                                                        <span class="block px-4 py-2 text-sm text-gray-700">Remove Friend</span>
+                                                    @else
+                                                        <a href="{{ route('add.friend', ['user' => $user]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Add Friend</a>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">
                                                 {{ $user->status }}
-                                                Not a friend
+                                                @if ($user->isFriend(auth()->user()))
+                                                    Friend
+                                                @else
+                                                    Not a friend
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>
@@ -50,5 +58,5 @@
             </div>
         </div>
     </x-users-setting>
-    <script src="{{asset('js/dropdown.js')}}"></script>
+    <script src="{{ asset('js/dropdown.js') }}"></script>
 </x-layout>
