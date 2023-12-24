@@ -34,16 +34,26 @@
                                                     @if ($user->isFriend(auth()->user()))
                                                         <a href="{{ route('remove.friend', ['friend' => $user]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Remove Friend</a>
                                                     @else
-                                                        <a href="{{ route('add.friend', ['user' => $user]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Add Friend</a>
+                                                        <a href="{{ route('add.friend', ['user' => $user]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Send Friend Request</a>
                                                     @endif
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">
-                                                {{ $user->status }}
-                                                @if ($user->isFriend(auth()->user()))
-                                                    Friend
+                                                @php
+                                                    $friendship = auth()->user()->getFriendship($user);
+                                                @endphp
+                                                @if ($friendship)
+                                                    @if ($friendship->status == Multicaret\Acquaintances\Status::PENDING)
+                                                        Friend request sent
+                                                    @elseif ($friendship->status == Multicaret\Acquaintances\Status::ACCEPTED)
+                                                        Friend
+                                                    @elseif ($friendship->status == Multicaret\Acquaintances\Status::DENIED)
+                                                        Friend request declined
+                                                    @else
+                                                        Unknown status
+                                                    @endif
                                                 @else
                                                     Not a friend
                                                 @endif
