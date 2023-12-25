@@ -31,8 +31,16 @@
                                                 </div>
                                                 <div id="dropdownContent{{ $user->id }}" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
                                                     <a href="{{ route('profiles.show', ['user' => $user]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</a>
+                                                    
                                                     @if ($user->isFriend(auth()->user()))
                                                         <a href="{{ route('remove.friend', ['friend' => $user]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Remove Friend</a>
+                                                    
+                                                    @elseif (auth()->user()->hasSentFriendRequestTo($user))
+                                                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onclick="event.preventDefault(); document.getElementById('cancel-friend-request-form-{{ $user->id }}').submit();">Cancel Friend Request</a>
+
+                                                        <form id="cancel-friend-request-form-{{ $user->id }}" action="{{ route('cancel.friend.request', ['user' => $user]) }}" method="POST" style="display: none;">
+                                                            @csrf
+                                                        </form>
                                                     @else
                                                         <a href="{{ route('add.friend', ['user' => $user]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Send Friend Request</a>
                                                     @endif
