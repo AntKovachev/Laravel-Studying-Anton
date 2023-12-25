@@ -8,13 +8,13 @@
         <aside class="w-48 flex-shrink-0">
             <ul>
                 <li class="mb-2 mt-2 py-3">
-                    <button type="button" class="transition-colors duration-300 bg-blue-500 hover:bg-blue-600 mt-4 lg:mt-0 lg:ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-8" onclick="window.location.href='/admin/friends'">
-                        My Friends
+                    <button type="button" class="transition-colors duration-300 bg-blue-500 hover:bg-blue-600 mt-4 lg:mt-0 lg:ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-8" onclick="window.location.href='/admin/users'">
+                        All Users
                     </button>
                 </li>
 
                 <li class="mt-5 mb-2">
-                    <button type="button" class="transition-colors duration-300 bg-blue-500 hover:bg-blue-600 mt-4 lg:mt-0 lg:ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-8" onclick="window.location.href='/'">
+                    <button type="button" class="transition-colors duration-300 bg-blue-500 hover:bg-blue-600 mt-4 lg:mt-0 lg:ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-8" onclick="window.history.back()">
                         Go Back
                     </button>
                 </li>
@@ -27,5 +27,4 @@
             </x-panel>
         </main>
     </div>
-
 </section>
