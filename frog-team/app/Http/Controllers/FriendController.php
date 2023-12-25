@@ -27,8 +27,10 @@ class FriendController extends Controller
             $user->befriend($recipient);
             
             return back()->with('success', 'Friend request sent!');
-        } else {
+        } else if ($user->hasSentFriendRequestTo($recipient)) {
             // User is already a friend, handle accordingly
+            return back()->with('success', 'Friend request already sent!');
+        } else {
             return back()->with('success', 'User is already your friend!');
         }
     }
@@ -48,5 +50,20 @@ class FriendController extends Controller
             // Handle the case where the specified user is not a friend
             return back()->with('success', 'This user is not in your friend list!');
         }
-}
+    }
+
+    public function cancelFriendRequest(User $user)
+    {
+        $authUser = auth()->user();
+
+        // Check if a friend request has been sent
+        if ($authUser->hasSentFriendRequestTo($user)) {
+            // Cancel the friend request
+            $authUser->cancelFriendRequest($user);
+
+            return back()->with('success', 'Friend request canceled successfully!');
+        }
+
+        return back()->with('error', 'No friend request to cancel!');
+    }
 }
