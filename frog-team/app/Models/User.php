@@ -45,7 +45,7 @@ class User extends Authenticatable implements CanResetPassword
     // Mutator !!!IMPORTANT TO FOLLOW NAMING CONVENTION!!!
     public function setPasswordAttribute($password)
     {
-        $this->attributes['password'] = $password;
+        $this->attributes['password'] = bcrypt($password);
     }
 
     public function posts()
