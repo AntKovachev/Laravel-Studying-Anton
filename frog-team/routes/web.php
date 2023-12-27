@@ -72,6 +72,8 @@ Route::get('/admin/friends', [AccountController::class, 'showFriends'])->middlew
 Route::get('/add-friend/{user}', [FriendController::class, 'addFriend'])->name('add.friend')->middleware('auth');
 Route::post('/cancel-friend-request/{user}', [FriendController::class, 'cancelFriendRequest'])->name('cancel.friend.request')->middleware('auth');
 Route::get('/remove-friend/{friend}', [FriendController::class, 'removeFriend'])->name('remove.friend')->middleware('auth');
+Route::get('/block-user/{user}', [FriendController::class, 'block'])->name('block.user')->middleware('auth');
+Route::post('/unblock-user/{user}', [FriendController::class, 'unblock'])->name('unblock.user')->middleware('auth');
 
 Route::get('/profiles/{user}', [UserProfileController::class, 'show'])->name('profiles.show')->middleware('auth');
 

@@ -30,8 +30,9 @@
                                                     </button>
                                                 </div>
                                                 <div id="dropdownContent{{ $user->id }}" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
-                                                    <a href="{{ route('profiles.show', ['user' => $user]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</a>
-                                                    
+                                                    @if (!auth()->user()->hasBlocked($user))
+                                                        <a href="{{ route('profiles.show', ['user' => $user]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View</a>
+                                                    @endif
                                                     @if ($user->isFriend(auth()->user()))
                                                         <a href="{{ route('remove.friend', ['friend' => $user]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Remove Friend</a>
                                                     
@@ -39,6 +40,14 @@
                                                         <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onclick="event.preventDefault(); document.getElementById('cancel-friend-request-form-{{ $user->id }}').submit();">Cancel Friend Request</a>
 
                                                         <form id="cancel-friend-request-form-{{ $user->id }}" action="{{ route('cancel.friend.request', ['user' => $user]) }}" method="POST" style="display: none;">
+                                                            @csrf
+                                                        </form>
+                                                    @elseif (auth()->user()->hasBlocked($user))
+                                                        <a href="{{ route('unblock.user', ['user' => $user]) }}" onclick="event.preventDefault(); document.getElementById('unblock-user-form-{{ $user->id }}').submit();" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                                            Unblock
+                                                        </a>
+                                                        
+                                                        <form id="unblock-user-form-{{ $user->id }}" action="{{ route('unblock.user', ['user' => $user]) }}" method="POST" style="display: none;">
                                                             @csrf
                                                         </form>
                                                     @else
@@ -59,8 +68,10 @@
                                                         Friend
                                                     @elseif ($friendship->status == Multicaret\Acquaintances\Status::DENIED)
                                                         Friend request declined
+                                                    @elseif ($friendship->status == Multicaret\Acquaintances\Status::BLOCKED)
+                                                        Blocked
                                                     @else
-                                                        Unknown status
+                                                        Unknown Status    
                                                     @endif
                                                 @else
                                                     Not a friend

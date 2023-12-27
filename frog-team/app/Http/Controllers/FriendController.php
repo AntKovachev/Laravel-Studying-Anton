@@ -1,5 +1,4 @@
 <?php
-// app/Http/Controllers/FriendController.php
 
 namespace App\Http\Controllers;
 use Hootlex\Friendships\Traits\Friendable;
@@ -65,5 +64,32 @@ class FriendController extends Controller
         }
 
         return back()->with('error', 'No friend request to cancel!');
+    }
+
+    public function block($recipientId)
+    {
+        $user = auth()->user();
+
+        $recipient = User::find($recipientId);
+
+        $user->blockFriend($recipient);
+
+        return back()->with('success', 'Friend blocked successfully!');
+    }
+
+    public function unblock($recipientId)
+    {
+        $user = auth()->user();
+
+        $blockedUser = User::find($recipientId);
+
+        if ($user->hasBlocked($blockedUser)) {
+            //Unbock the user
+            $user->unblockFriend($blockedUser);
+
+            return back()->with('success', 'User unblocked successfully!');
+        } else {
+            return back()->with('success', 'This user is not blocked!');
+        }
     }
 }
