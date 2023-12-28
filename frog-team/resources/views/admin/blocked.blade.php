@@ -38,7 +38,16 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">
-                                                Online
+                                                @php
+                                                    $friendship = auth()->user()->getFriendship($blockedUser);
+                                                @endphp
+                                                @if ($friendship)
+                                                    @if ($friendship->status == Multicaret\Acquaintances\Status::BLOCKED)
+                                                        Blocked
+                                                    @else
+                                                        Unknown Status    
+                                                    @endif
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>
