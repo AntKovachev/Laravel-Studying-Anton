@@ -61,20 +61,22 @@
                                                 @php
                                                     $friendship = auth()->user()->getFriendship($user);
                                                 @endphp
+                                                
                                                 @if ($friendship)
                                                     @if ($friendship->status == Multicaret\Acquaintances\Status::PENDING)
                                                         Friend request sent
-                                                    @elseif ($friendship->status == Multicaret\Acquaintances\Status::ACCEPTED)
-                                                        Friend
-                                                    @elseif ($friendship->status == Multicaret\Acquaintances\Status::DENIED)
-                                                        Friend request declined
-                                                    @elseif ($friendship->status == Multicaret\Acquaintances\Status::BLOCKED)
-                                                        Blocked
-                                                    @else
-                                                        Unknown Status    
+                                                        @elseif ($friendship->status == Multicaret\Acquaintances\Status::ACCEPTED)
+                                                            Friend
+                                                        @elseif ($friendship->status == Multicaret\Acquaintances\Status::DENIED)
+                                                            Friend request declined
+                                                        @elseif ($friendship->status == Multicaret\Acquaintances\Status::BLOCKED)
+                                                            Blocked
+                                                        @else
+                                                            Unknown Status    
                                                     @endif
-                                                @else
-                                                    Not a friend
+
+                                                    @else
+                                                        Not a friend
                                                 @endif
                                             </div>
                                         </td>

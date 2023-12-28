@@ -26,7 +26,24 @@ class AccountController extends Controller
         $user = $request->user();
 
         $friends = $user->getFriends();
-
+        
         return view('admin.friends', compact('friends'));
+    }
+
+    public function showBlockedUsers(Request $request)
+    {
+        $user = $request->user();
+        
+        $blockedUsersList = $user->getBlockedFriendshipsByCurrentUser();
+        $blockedIds = [];
+
+        foreach ($blockedUsersList as $blockedUser) {
+            $id = $blockedUser->recipient_id;
+            array_push($blockedIds, $id);
+        }
+
+        $blockedUsers = User::whereIn('id', $blockedIds)->get(['id', 'username']);
+
+        return view('admin.blocked', compact('blockedUsers'));
     }
 }
