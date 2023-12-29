@@ -17,7 +17,7 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach ($users as $user)
-                                    @if ($user->username == auth()->user()->username)
+                                    @if ($user->username == auth()->user()->username || auth()->user()->hasBlocked($user) || $user->isBlockedBy(auth()->user()))
                                         @continue
                                     @endif
 

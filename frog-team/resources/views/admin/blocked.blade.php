@@ -17,40 +17,42 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach ($blockedUsers as $blockedUser)
-                                    <tr id="friendRow{{ $blockedUser->id }}" class="transition-colors">
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center relative">
-                                                <div class="text-sm font-medium text-gray-900 cursor-pointer">
-                                                    <button type="button" id="friendDropdown{{ $blockedUser->id }}" onclick="toggleDropdown('friendDropdown{{ $blockedUser->id }}', 'friendRow{{ $blockedUser->id }}', event)">
-                                                        {{ $blockedUser->username }}
-                                                    </button>
+                                    @if (auth()->user()->hasBlocked($blockedUser))
+                                        <tr id="friendRow{{ $blockedUser->id }}" class="transition-colors">
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center relative">
+                                                    <div class="text-sm font-medium text-gray-900 cursor-pointer">
+                                                        <button type="button" id="friendDropdown{{ $blockedUser->id }}" onclick="toggleDropdown('friendDropdown{{ $blockedUser->id }}', 'friendRow{{ $blockedUser->id }}', event)">
+                                                            {{ $blockedUser->username }}
+                                                        </button>
+                                                    </div>
+                                                    <div id="dropdownContent{{ $blockedUser->id }}" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
+                                                        <a href="{{ route('unblock.user', ['user' => $blockedUser]) }}" onclick="event.preventDefault(); document.getElementById('unblock-user-form-{{ $blockedUser->id }}').submit();" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                                            Unblock
+                                                        </a>
+                                                        
+                                                        <form id="unblock-user-form-{{ $blockedUser->id }}" action="{{ route('unblock.user', ['user' => $blockedUser]) }}" method="POST" style="display: none;">
+                                                            @csrf
+                                                        </form>
+                                                    </div>
                                                 </div>
-                                                <div id="dropdownContent{{ $blockedUser->id }}" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
-                                                    <a href="{{ route('unblock.user', ['user' => $blockedUser]) }}" onclick="event.preventDefault(); document.getElementById('unblock-user-form-{{ $blockedUser->id }}').submit();" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                                        Unblock
-                                                    </a>
-                                                    
-                                                    <form id="unblock-user-form-{{ $blockedUser->id }}" action="{{ route('unblock.user', ['user' => $blockedUser]) }}" method="POST" style="display: none;">
-                                                        @csrf
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">
-                                                @php
-                                                    $friendship = auth()->user()->getFriendship($blockedUser);
-                                                @endphp
-                                                @if ($friendship)
-                                                    @if ($friendship->status == Multicaret\Acquaintances\Status::BLOCKED)
-                                                        Blocked
-                                                    @else
-                                                        Unknown Status    
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">
+                                                    @php
+                                                        $friendship = auth()->user()->getFriendship($blockedUser);
+                                                    @endphp
+                                                    @if ($friendship)
+                                                        @if ($friendship->status == Multicaret\Acquaintances\Status::BLOCKED)
+                                                            Blocked
+                                                        @else
+                                                            Unknown Status    
+                                                        @endif
                                                     @endif
-                                                @endif
-                                            </div>
-                                        </td>
-                                    </tr>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>
