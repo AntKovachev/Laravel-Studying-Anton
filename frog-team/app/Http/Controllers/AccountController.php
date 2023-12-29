@@ -46,4 +46,29 @@ class AccountController extends Controller
 
         return view('admin.blocked', compact('blockedUsers'));
     }
+
+    public function showFriendRequests()
+    {
+        $user = auth()->user();
+
+        $friendRequestIds = $user->getFriendRequests()->pluck('sender_id');
+
+        $friendRequests = User::whereIn('id', $friendRequestIds)->get(['id', 'username']);
+
+        return view('admin.friend-requests', compact('friendRequests'));
+    }
+
+    public function acceptFriendRequest(User $user)
+    {
+        auth()->user()->acceptFriendRequest($user);
+
+        return redirect()->back()->with('success', 'Friend request accepted successfully.');
+    }
+
+    public function declineFriendRequest(User $user)
+    {
+        auth()->user()->denyFriendRequest($user);
+
+        return redirect()->back()->with('success', 'Friend request declined successfully.');
+    }
 }
