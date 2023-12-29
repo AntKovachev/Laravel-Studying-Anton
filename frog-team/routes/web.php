@@ -69,6 +69,10 @@ Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
 Route::get('/admin/users', [AccountController::class, 'showUsers'])->middleware('auth');
 Route::get('/admin/friends', [AccountController::class, 'showFriends'])->middleware('auth');
 Route::get('/admin/blocked-users', [AccountController::class, 'showBlockedUsers'])->middleware('auth');
+Route::get('/admin/friend-requests', [AccountController::class, 'showFriendRequests'])->middleware('auth');
+Route::post('/accept-friend-request/{user}', [AccountController::class, 'acceptFriendRequest'])->name('accept.friend.request')->middleware('auth');
+Route::post('/decline-friend-request/{user}', [AccountController::class, 'declineFriendRequest'])->name('decline.friend.request')->middleware('auth');
+
 
 Route::get('/add-friend/{user}', [FriendController::class, 'addFriend'])->name('add.friend')->middleware('auth');
 Route::post('/cancel-friend-request/{user}', [FriendController::class, 'cancelFriendRequest'])->name('cancel.friend.request')->middleware('auth');
