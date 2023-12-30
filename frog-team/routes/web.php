@@ -66,10 +66,10 @@ Route::middleware('can:admin')->group(function () {
 
 Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
 
-Route::get('/admin/users', [AccountController::class, 'showUsers'])->middleware('auth');
-Route::get('/admin/friends', [AccountController::class, 'showFriends'])->middleware('auth');
-Route::get('/admin/blocked-users', [AccountController::class, 'showBlockedUsers'])->middleware('auth');
-Route::get('/admin/friend-requests', [AccountController::class, 'showFriendRequests'])->middleware('auth');
+Route::get('/admin/users', [AccountController::class, 'showUsers'])->name('all.users')->middleware('auth');
+Route::get('/admin/friends', [AccountController::class, 'showFriends'])->name('friends')->middleware('auth');
+Route::get('/admin/blocked-users', [AccountController::class, 'showBlockedUsers'])->name('blocked.users')->middleware('auth');
+Route::get('/admin/friend-requests', [AccountController::class, 'showFriendRequests'])->name('friend.requests')->middleware('auth');
 Route::post('/accept-friend-request/{user}', [AccountController::class, 'acceptFriendRequest'])->name('accept.friend.request')->middleware('auth');
 Route::post('/decline-friend-request/{user}', [AccountController::class, 'declineFriendRequest'])->name('decline.friend.request')->middleware('auth');
 

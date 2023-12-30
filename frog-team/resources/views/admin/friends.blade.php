@@ -1,9 +1,24 @@
 <x-layout>
-    <x-friends-setting heading="Friends">
+    <x-friends-setting heading="My Friends">
         <div class="flex flex-col">
+            <div class="mb-4">
+                <form action="{{ route('friends') }}" method="GET">
+                    <input
+                        type="text"
+                        name="search"
+                        placeholder="Search by username"
+                        value="{{ request('search') }}"
+                        class="px-4 py-2 border rounded-md"
+                    >
+                    <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md">Search</button>
+                </form>
+            </div>
+
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                    <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                    @if ($friends->isEmpty())
+                        <p class="text-center text-gray-500 py-5 mt-5">No friend with that username found.</p>
+                    @else
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
@@ -43,7 +58,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>
