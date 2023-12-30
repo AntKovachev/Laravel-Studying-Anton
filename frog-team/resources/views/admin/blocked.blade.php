@@ -42,12 +42,10 @@
                                                     @php
                                                         $friendship = auth()->user()->getFriendship($blockedUser);
                                                     @endphp
-                                                    @if ($friendship)
-                                                        @if ($friendship->status == Multicaret\Acquaintances\Status::BLOCKED)
-                                                            Blocked
-                                                        @else
-                                                            Unknown Status    
-                                                        @endif
+                                                    @if ($friendship && $friendship->status == Multicaret\Acquaintances\Status::BLOCKED)
+                                                        Blocked
+                                                    @else
+                                                        Unknown Status    
                                                     @endif
                                                 </div>
                                             </td>
@@ -59,6 +57,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="mt-4">
+            {{ $blockedUsers->links() }}
         </div>
         <script src="{{ asset('js/friendsDropdown.js') }}"></script>
     </x-blocked-setting>

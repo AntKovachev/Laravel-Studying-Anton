@@ -45,6 +45,10 @@
                 </div>
             </div>
         </div>
+
+        <div class="mt-4">
+            {{ $friendRequests->links() }}
+        </div>
     </x-blocked-users-setting>
     <script src="{{ asset('js/dropdown.js') }}"></script>
 </x-layout>

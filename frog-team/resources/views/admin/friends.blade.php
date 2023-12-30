@@ -47,6 +47,10 @@
                 </div>
             </div>
         </div>
-        <script src="{{ asset('js/friendsDropdown.js') }}"></script>
+
+        <div class="mt-4">
+            {{ $friends->links() }}
+        </div>
     </x-friends-setting>
+    <script src="{{ asset('js/friendsDropdown.js') }}"></script>
 </x-layout>

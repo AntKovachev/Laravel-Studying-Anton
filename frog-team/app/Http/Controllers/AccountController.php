@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use DB;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Hootlex\Friendships\Traits\Friendable;
@@ -16,7 +17,7 @@ class AccountController extends Controller
 
     public function showUsers()
     {
-        $users = User::paginate(100);
+        $users = User::paginate(20);
 
         return view('admin.users', compact('users'));
     }
@@ -25,8 +26,8 @@ class AccountController extends Controller
     {
         $user = $request->user();
 
-        $friends = $user->getFriends();
-        
+        $friends = $user->getFriends(10);
+    
         return view('admin.friends', compact('friends'));
     }
 
@@ -35,17 +36,13 @@ class AccountController extends Controller
         $user = $request->user();
         
         $blockedUsersList = $user->getBlockedFriendshipsByCurrentUser();
-        $blockedIds = [];
+        $blockedIds = $blockedUsersList->pluck('recipient_id');
 
-        foreach ($blockedUsersList as $blockedUser) {
-            $id = $blockedUser->recipient_id;
-            array_push($blockedIds, $id);
-        }
-
-        $blockedUsers = User::whereIn('id', $blockedIds)->get(['id', 'username']);
+        $blockedUsers = User::whereIn('id', $blockedIds)->paginate(10);
 
         return view('admin.blocked', compact('blockedUsers'));
     }
+
 
     public function showFriendRequests()
     {
@@ -53,7 +50,9 @@ class AccountController extends Controller
 
         $friendRequestIds = $user->getFriendRequests()->pluck('sender_id');
 
-        $friendRequests = User::whereIn('id', $friendRequestIds)->get(['id', 'username']);
+        $friendRequests = DB::table('users')
+            ->whereIn('id', $friendRequestIds)
+            ->paginate(10);
 
         return view('admin.friend-requests', compact('friendRequests'));
     }
