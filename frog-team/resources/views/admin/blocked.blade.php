@@ -1,9 +1,28 @@
 <x-layout>
-    <x-blocked-setting heading="Blocked Users">
+    <x-blocked-users-setting heading="Blocked Users">
         <div class="flex flex-col">
+            <div class="mb-4">
+                <form action="{{ route('blocked.users') }}" method="GET">
+                    <input
+                        type="text"
+                        name="search"
+                        placeholder="Search by username"
+                        value="{{ $search }}"
+                        class="px-4 py-2 border rounded-md"
+                    >
+                    <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md">Search</button>
+                </form>
+            </div>
+
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                    <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                    @if ($blockedUsers->isEmpty())
+                        <p class="text-center text-gray-500 py-5 mt-5">
+                            @if ($search)
+                                No blocked users found.
+                            @endif
+                        </p>
+                    @else
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
@@ -30,7 +49,6 @@
                                                         <a href="{{ route('unblock.user', ['user' => $blockedUser]) }}" onclick="event.preventDefault(); document.getElementById('unblock-user-form-{{ $blockedUser->id }}').submit();" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                                             Unblock
                                                         </a>
-                                                        
                                                         <form id="unblock-user-form-{{ $blockedUser->id }}" action="{{ route('unblock.user', ['user' => $blockedUser]) }}" method="POST" style="display: none;">
                                                             @csrf
                                                         </form>
@@ -54,7 +72,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -63,5 +81,5 @@
             {{ $blockedUsers->links() }}
         </div>
         <script src="{{ asset('js/friendsDropdown.js') }}"></script>
-    </x-blocked-setting>
+    </x-blocked-users-setting>
 </x-layout>

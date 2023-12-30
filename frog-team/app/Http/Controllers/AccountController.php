@@ -15,9 +15,16 @@ class AccountController extends Controller
         return view('admin.account');
     }
 
-    public function showUsers()
+    public function showUsers(Request $request)
     {
-        $users = User::paginate(20);
+        $query = User::query();
+
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
+            $query->where('username', 'like', "%{$searchTerm}%");
+        }
+
+        $users = $query->paginate(20);
 
         return view('admin.users', compact('users'));
     }
@@ -25,36 +32,52 @@ class AccountController extends Controller
     public function showFriends(Request $request)
     {
         $user = $request->user();
+        $search = $request->input('search');
 
-        $friends = $user->getFriends(10);
-    
+        $friendsQuery = $user->getFriendsQueryBuilder();
+
+        if ($search) {
+            $friendsQuery->where('username', 'like', '%' . $search . '%');
+        }
+
+        $friends = $friendsQuery->paginate(10);
+
         return view('admin.friends', compact('friends'));
     }
+
 
     public function showBlockedUsers(Request $request)
     {
         $user = $request->user();
-        
+        $search = $request->input('search');
+
         $blockedUsersList = $user->getBlockedFriendshipsByCurrentUser();
         $blockedIds = $blockedUsersList->pluck('recipient_id');
 
-        $blockedUsers = User::whereIn('id', $blockedIds)->paginate(10);
+        $blockedUsers = User::whereIn('id', $blockedIds)
+            ->when($search, function ($query) use ($search) {
+                $query->where('username', 'like', '%' . $search . '%');
+            })
+            ->paginate(10);
 
-        return view('admin.blocked', compact('blockedUsers'));
+        return view('admin.blocked', compact('blockedUsers', 'search'));
     }
 
 
-    public function showFriendRequests()
+    public function showFriendRequests(Request $request)
     {
         $user = auth()->user();
+        $search = $request->input('search');
 
         $friendRequestIds = $user->getFriendRequests()->pluck('sender_id');
 
-        $friendRequests = DB::table('users')
-            ->whereIn('id', $friendRequestIds)
+        $friendRequests = User::whereIn('id', $friendRequestIds)
+            ->when($search, function ($query) use ($search) {
+                $query->where('username', 'like', '%' . $search . '%');
+            })
             ->paginate(10);
 
-        return view('admin.friend-requests', compact('friendRequests'));
+        return view('admin.friend-requests', compact('friendRequests', 'search'));
     }
 
     public function acceptFriendRequest(User $user)
