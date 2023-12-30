@@ -88,6 +88,10 @@
                 </div>
             </div>
         </div>
+
+        <div class="mt-4">
+            {{ $users->links() }}
+        </div>
     </x-users-setting>
     <script src="{{ asset('js/dropdown.js') }}"></script>
 </x-layout>
