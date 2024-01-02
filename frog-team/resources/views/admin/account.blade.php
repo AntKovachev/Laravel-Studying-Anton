@@ -8,17 +8,35 @@
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <tr>
                                     <td class="py-4">
-                                        <div class="flex items-center"><p class="mr-2"><b>Username: </b></p> {{ auth()->user()->username }}</div>
+                                        <div class="flex items-center">
+                                            <p class="mr-2"><b>Username: </b></p> {{ auth()->user()->username }}
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="py-4">
-                                        <div class="flex items-center"><p class="mr-2"><b>Member Since: </b></p> {{ auth()->user()->created_at->format('M jS, Y') }}</div>
+                                        <div class="flex items-center">
+                                            <p class="mr-2"><b>Member Since: </b></p> {{ auth()->user()->created_at->format('M jS, Y') }}
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="py-4">
-                                        <div class="flex items-center"><p class="mr-2"><b>Number of posts: </b></p> {{ auth()->user()->posts()->count() }}</div>
+                                        <div class="flex items-center">
+                                            <p class="mr-2"><b>Number of posts: </b></p> {{ auth()->user()->posts()->count() }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4">
+                                        <div class="flex items-center">
+                                            <p class="mr-2"><b>Subscription Status: </b></p>
+                                            @if($isSubscribed)
+                                                Subscribed
+                                            @else
+                                                Not Subscribed
+                                            @endif
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
