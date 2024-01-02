@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Services\Newsletter;
 use DB;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -10,9 +11,12 @@ class AccountController extends Controller
 {
     use Friendable;
 
-    public function index()
+    public function index(Newsletter $newsletter)
     {
-        return view('admin.account');
+        $user = auth()->user();
+        $isSubscribed = $newsletter->isSubscribed($user->email);
+        
+        return view('admin.account', compact('isSubscribed'));
     }
 
     public function showUsers(Request $request)
