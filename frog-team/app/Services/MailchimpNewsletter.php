@@ -33,4 +33,11 @@ class MailchimpNewsletter implements Newsletter
             return false;
         }
     }
+
+    public function unsubscribe(string $email, string $list = null)
+    {
+        $list ??= config('services.mailchimp.lists.subscribers');
+
+        return $this->client->lists->updateListMember($list, md5(strtolower($email)), ['status' => 'unsubscribed']);
+    }
 }
