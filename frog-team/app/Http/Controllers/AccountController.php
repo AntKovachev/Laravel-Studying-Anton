@@ -97,4 +97,16 @@ class AccountController extends Controller
 
         return redirect()->back()->with('success', 'Friend request declined successfully.');
     }
+
+    public function unsubscribe(Newsletter $newsletter)
+    {
+        $user = auth()->user();
+
+        if ($newsletter->isSubscribed($user->email)) {
+            $newsletter->unsubscribe($user->email);
+            return redirect()->back()->with('success', 'Successfully unsubscribed from the newsletter.');
+        }
+
+        return redirect()->back()->withErrors(['error' => 'You are not subscribed to the newsletter.']);
+    }
 }

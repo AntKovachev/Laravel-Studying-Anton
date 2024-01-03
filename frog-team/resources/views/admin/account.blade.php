@@ -30,11 +30,19 @@
                                 <tr>
                                     <td class="py-4">
                                         <div class="flex items-center">
-                                            <p class="mr-2"><b>Subscription Status: </b></p>
+                                            <p class="mr-2"><b>Subscribed Status: </b></p>
                                             @if($isSubscribed)
                                                 Subscribed
+                                                <form action="{{ route('unsubscribe') }}" method="post">
+                                                    @csrf
+                                                    <button type="submit" class="ml-2 text-blue-500 underline">Unsubscribe</button>
+                                                </form>
                                             @else
                                                 Not Subscribed
+                                                <form action="{{ route('newsletter.subscribe') }}" method="post">
+                                                    @csrf
+                                                    <button type="submit" class="ml-2 text-blue-500 underline">Subscribe</button>
+                                                </form>
                                             @endif
                                         </div>
                                     </td>
