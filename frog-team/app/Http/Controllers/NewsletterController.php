@@ -16,12 +16,12 @@ class NewsletterController extends Controller
         try {
             $newsletter->subscribe(request('email'));
         } catch (Exception $e) {
-            return redirect('/')
-                ->withErrors(['email' => 'This email could not be added to our newsletter list.'])
+            return redirect('/account')
+                ->withErrors(['email' => 'Please wait before trying to subscribe again!'])
                 ->withInput()
                 ->withFragment('newsletter');
         }
 
-        return redirect('/')->with('success', 'You are now signed up for our newsletter!');
+        return redirect('/account')->with('success', 'You are now signed up for our newsletter!');
     }
 }

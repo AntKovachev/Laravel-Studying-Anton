@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Exception;
 use MailchimpMarketing\ApiClient;
 
 class MailchimpNewsletter implements Newsletter
@@ -14,11 +15,11 @@ class MailchimpNewsletter implements Newsletter
     public function subscribe(string $email, string $list = null)
     {
         $list ??= config('services.mailchimp.lists.subscribers');
-
-        return $this->client->lists->addListMember($list, [
-            'email_address' => $email,
-            'status' => 'subscribed'
-        ]);
+        
+            return $this->client->lists->addListMember($list, [
+                'email_address' => $email,
+                'status' => 'subscribed'
+            ]);        
     }
 
     public function isSubscribed(string $email, string $list = null): bool
@@ -37,7 +38,8 @@ class MailchimpNewsletter implements Newsletter
     public function unsubscribe(string $email, string $list = null)
     {
         $list ??= config('services.mailchimp.lists.subscribers');
-
+           
         return $this->client->lists->updateListMember($list, md5(strtolower($email)), ['status' => 'unsubscribed']);
+        
     }
 }
