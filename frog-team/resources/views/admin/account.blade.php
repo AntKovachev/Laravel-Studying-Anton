@@ -35,13 +35,14 @@
                                                 Subscribed
                                                 <form action="{{ route('unsubscribe') }}" method="post">
                                                     @csrf
-                                                    <button type="submit" class="ml-2 text-blue-500 underline">Unsubscribe</button>
+                                                    <button type="submit" class="transition-colors duration-300 bg-red-500 hover:bg-red-600 mt-4 lg:mt-0 lg:ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-8">Unsubscribe</button>
                                                 </form>
                                             @else
                                                 Not Subscribed
-                                                <form action="{{ route('newsletter.subscribe') }}" method="post">
+                                                <form id="subscribeForm" method="post" action="{{ route('newsletter.subscribe') }}" class="inline-block">
                                                     @csrf
-                                                    <button type="submit" class="ml-2 text-blue-500 underline">Subscribe</button>
+                                                    <input type="hidden" name="email" value="{{ auth()->user()->email }}">
+                                                    <button type="submit" class="transition-colors duration-300 bg-blue-500 hover:bg-blue-600 mt-4 lg:mt-0 lg:ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-8">Subscribe</button>
                                                 </form>
                                             @endif
                                         </div>
@@ -54,4 +55,39 @@
             </div>
         </div>
     </x-account-navigation>
+
+    @push('scripts')
+        <script>
+            document.getElementById('subscribeForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+                subscribeUser();
+            });
+            
+            function subscribeUser() {
+                fetch("{{ route('newsletter.subscribe') }}", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                    },
+                    body: JSON.stringify({
+                        email: "{{ auth()->user()->email }}",
+                    }),
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    document.getElementById('subscribeForm').innerHTML = "Subscribed";
+                })
+                .catch(error => {
+                    console.error('Error:', error.message);
+                });
+            }
+        </script>
+    @endpush    
 </x-layout>
