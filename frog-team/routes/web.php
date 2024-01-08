@@ -60,7 +60,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/friends', [AccountController::class, 'showFriends'])->name('friends');
     Route::get('/admin/blocked-users', [AccountController::class, 'showBlockedUsers'])->name('blocked.users');
     Route::get('/admin/friend-requests', [AccountController::class, 'showFriendRequests'])->name('friend.requests');
-    Route::get('/message', [AccountController::class, 'messageFriend'])->name('message.friend');
+    Route::get('/messages', [AccountController::class, 'showMessages'])->name('messages.show');
     Route::post('/accept-friend-request/{user}', [AccountController::class, 'acceptFriendRequest'])->name('accept.friend.request');
     Route::post('/decline-friend-request/{user}', [AccountController::class, 'declineFriendRequest'])->name('decline.friend.request');
 });
