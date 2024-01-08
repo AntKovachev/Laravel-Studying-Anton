@@ -49,6 +49,10 @@ class AccountController extends Controller
         return view('admin.friends', compact('friends'));
     }
 
+    public function messageFriend()
+    {
+        return view('admin.message');
+    }
 
     public function showBlockedUsers(Request $request)
     {
