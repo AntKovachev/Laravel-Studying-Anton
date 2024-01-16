@@ -87,7 +87,7 @@ class FriendController extends Controller
             //Unbock the user
             $user->unblockFriend($blockedUser);
 
-            return back()->with('success', 'User unblocked successfully!');
+            return back()->with('success', $blockedUser->username . ' unblocked successfully!');
         } else {
             return back()->with('success', 'This user is not blocked!');
         }
