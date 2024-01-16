@@ -35,7 +35,7 @@
                                                 Subscribed
                                                 <form action="{{ route('unsubscribe') }}" method="post">
                                                     @csrf
-                                                    <button type="submit" class="transition-colors duration-300 bg-red-500 hover:bg-red-600 mt-4 lg:mt-0 lg:ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-8">Unsubscribe</button>
+                                                    <button type="submit" class="transition-colors duration-300 bg-red-500 hover:bg-red-600 mt-4 lg:mt-0 lg:ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-8" onclick="return confirm('Are you sure you want to unsubscribe?')">Unsubscribe</button>
                                                 </form>
                                             @else
                                                 Not Subscribed
