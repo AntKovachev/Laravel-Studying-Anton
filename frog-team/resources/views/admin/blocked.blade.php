@@ -30,7 +30,7 @@
                                         Username
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Status
+                                        Action
                                     </th>
                                 </tr>
                             </thead>
@@ -45,14 +45,14 @@
                                                             {{ $blockedUser->username }}
                                                         </button>
                                                     </div>
-                                                    <div id="dropdownContent{{ $blockedUser->id }}" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
+                                                    {{-- <div id="dropdownContent{{ $blockedUser->id }}" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
                                                         <a href="{{ route('unblock.user', ['user' => $blockedUser]) }}" onclick="event.preventDefault(); document.getElementById('unblock-user-form-{{ $blockedUser->id }}').submit();" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                                             Unblock
                                                         </a>
                                                         <form id="unblock-user-form-{{ $blockedUser->id }}" action="{{ route('unblock.user', ['user' => $blockedUser]) }}" method="POST" style="display: none;">
                                                             @csrf
                                                         </form>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
@@ -61,7 +61,10 @@
                                                         $friendship = auth()->user()->getFriendship($blockedUser);
                                                     @endphp
                                                     @if ($friendship && $friendship->status == Multicaret\Acquaintances\Status::BLOCKED)
-                                                        Blocked
+                                                        <form method="POST" action="{{ route('unblock.user', ['user' => $blockedUser]) }}" onclick="return confirm('Are you sure you want to unblock {{$blockedUser->username}}?');" class="inline">
+                                                            @csrf
+                                                            <button type="submit" class="bg-blue-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600">Unblock</button>
+                                                        </form>
                                                     @else
                                                         Unknown Status    
                                                     @endif
