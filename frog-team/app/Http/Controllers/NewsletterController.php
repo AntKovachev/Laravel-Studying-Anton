@@ -17,7 +17,7 @@ class NewsletterController extends Controller
             $newsletter->subscribe(request('email'));
         } catch (Exception $e) {
             return redirect('/account')
-                ->withErrors(['email' => 'Please wait before trying to subscribe again!'])
+                ->withErrors(['email' => 'You cannot re-subscribe, please contact our support!'])
                 ->withInput()
                 ->withFragment('newsletter');
         }

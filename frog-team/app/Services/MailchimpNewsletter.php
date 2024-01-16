@@ -13,13 +13,14 @@ class MailchimpNewsletter implements Newsletter
     }
 
     public function subscribe(string $email, string $list = null)
-    {
+    {   
         $list ??= config('services.mailchimp.lists.subscribers');
+
+        return $this->client->lists->addListMember($list, [
+            'email_address' => $email,
+            'status' => 'subscribed'
+        ]);        
         
-            return $this->client->lists->addListMember($list, [
-                'email_address' => $email,
-                'status' => 'subscribed'
-            ]);        
     }
 
     public function isSubscribed(string $email, string $list = null): bool
@@ -29,7 +30,7 @@ class MailchimpNewsletter implements Newsletter
         try {
             $member = $this->client->lists->getListMember($list, md5(strtolower($email)));
             return isset($member->status) && $member->status === 'subscribed';
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Handle exceptions (e.g., if the member is not found or there's an API error)
             return false;
         }
@@ -39,7 +40,7 @@ class MailchimpNewsletter implements Newsletter
     {
         $list ??= config('services.mailchimp.lists.subscribers');
            
-        return $this->client->lists->updateListMember($list, md5(strtolower($email)), ['status' => 'unsubscribed']);
+        return $this->client->lists->deleteListMember($list, md5(strtolower($email)));
         
     }
 }
