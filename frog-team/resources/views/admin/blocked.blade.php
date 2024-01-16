@@ -45,14 +45,6 @@
                                                             {{ $blockedUser->username }}
                                                         </button>
                                                     </div>
-                                                    {{-- <div id="dropdownContent{{ $blockedUser->id }}" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
-                                                        <a href="{{ route('unblock.user', ['user' => $blockedUser]) }}" onclick="event.preventDefault(); document.getElementById('unblock-user-form-{{ $blockedUser->id }}').submit();" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                                            Unblock
-                                                        </a>
-                                                        <form id="unblock-user-form-{{ $blockedUser->id }}" action="{{ route('unblock.user', ['user' => $blockedUser]) }}" method="POST" style="display: none;">
-                                                            @csrf
-                                                        </form>
-                                                    </div> --}}
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
