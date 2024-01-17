@@ -32,10 +32,11 @@ class SessionsController extends Controller
 
         // Auth failed
         throw ValidationException::withMessages([
-            'email' => 'Your provided credentials could not be verified!'
-        ]);
-
+            'password' => "The provided credentials are incorrect.. <a href='" . route('password.request') . "'><b><u>Forgot Password?</u></b></a>",
+        ])->status(422)->errorBag('custom');
     }
+
+
     public function destroy()
     {
         auth()->logout();

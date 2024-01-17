@@ -11,7 +11,15 @@
                     <x-form.button>Log In</x-form.button>
                 </form>
                 
-                <div class="flex justify-between mt-4">
+                @if ($errors->custom->has('password'))
+                    <div class="flex items-center mt-4">
+                        <p class="text-red-500 mr-2">
+                            {!! $errors->custom->first('password') !!}
+                        </p>
+                    </div>
+                @endif
+
+                <div class="flex justify-between mt-2">
                     <form method="GET" action="/forgot-password">
                         <x-form.button>Forgot Password?</x-form.button>
                     </form>
