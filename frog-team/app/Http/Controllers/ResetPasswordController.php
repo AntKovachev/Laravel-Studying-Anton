@@ -39,7 +39,7 @@ class ResetPasswordController extends Controller
             function ($user, $password) {
                 // This closure is only executed if the new password is valid.
                 // You can update the password here.
-                $user->password = Hash::make($password);
+                $user->password = $password;
                 $user->save();
             }
         );
