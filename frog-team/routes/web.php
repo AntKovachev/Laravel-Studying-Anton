@@ -36,7 +36,7 @@ Route::middleware(['guest'])->group(function () {
             $request->only('email')
         );
         return $status === Password::RESET_LINK_SENT
-            ? back()->with(['status' => __($status)])
+            ? back()->with('success', 'If this e-mail exists in our database, we will send a password reset link.')
             : back()->withErrors(['email' => __($status)]);
     })->name('password.email');
     Route::get('/reset-password/{token}', function (string $token) {
