@@ -24,7 +24,7 @@ class ResetPasswordController extends Controller
         ]);
 
         $user = User::where('email', $request->input('email'))->first();
-
+        
         if (!$user) {
             return back()->withErrors(['email' => ['Invalid email']]);
         }
@@ -45,7 +45,7 @@ class ResetPasswordController extends Controller
         );
 
         return $status == Password::PASSWORD_RESET
-            ? redirect('/')->with('status', __($status))
+            ? redirect('/login')->with('success', 'Your password has been reset successfully!')
             : back()->withErrors(['email' => [__($status)]]);
     }
 }
